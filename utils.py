@@ -1,6 +1,7 @@
 import joblib
 import streamlit as st
-class utils:
+from learn_control import learn_control 
+class utils(learn_control):
     def __init__(self,age:int,streams:int,Internships:int,cgpa:int
                 ,Hostel:int,HistoryOfBacklogs:int) -> None:
            
@@ -8,8 +9,12 @@ class utils:
             model = joblib.load("model.joblib")
             if x_data:
                 print(x_data)
-                y_pred = model.predict_one(x_data)      
-                model = model.learn_one(x_data, y_pred)
+                y_pred = model.predict_one(x_data) 
+                print(learn_control.learn_control_processing(x_data))  
+                if 1 == learn_control.learn_control_processing(x_data):
+                    model = model.learn_one(x_data, y_pred)
+                else:
+                    pass
                 joblib.dump(model,"model.joblib")
             return y_pred
 
